@@ -7,7 +7,14 @@ use crate::dependencies::{LogType, backup, initialize_dir, log};
 
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about=None)]
+#[command(
+    version,
+    author,
+    about = "Easy/Efficient Backup Of Data",
+    long_about = "An efficient backup solution developed in Rust. Can be used to make manual backups easy and efficient.",
+    help_template = "{bin} {version}\nDeveloped By: {author}\n\n{about}\n\nUsage:\n\t{usage}\n\n{all-args}",
+    author = "Sivaprakash P"
+)]
 struct CLI {
     src: PathBuf,
     dest: Option<PathBuf>,
