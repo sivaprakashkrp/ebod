@@ -3,9 +3,9 @@ use std::{fs, io::Write, path::{Path, PathBuf}};
 use crate::{dependencies::recursive_listing, log_deps::{LogType, log}, structs::FileEntry};
 
 // A function to create metadata about the directory in .ebod/metadata.json
-pub fn initialize_dir(path: &PathBuf, hidden_files: bool) {
+pub fn initialize_dir(path: &PathBuf, include_hidden: bool) {
     let mut data: Vec<FileEntry> = vec![];
-    recursive_listing(&path, &path, &mut data, hidden_files);
+    recursive_listing(&path, &path, &mut data, include_hidden);
 
     // pushing ".ebod/" into path
     let config_path = Path::new(path).join(".ebod");

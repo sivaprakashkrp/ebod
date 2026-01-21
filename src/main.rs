@@ -7,8 +7,9 @@ mod init_deps;
 mod backup_deps;
 mod structs;
 mod log_deps;
+mod sync_deps;
 
-use crate::{backup_deps::backup, init_deps::initialize_dir, log_deps::{LogType, log}};
+use crate::{backup_deps::backup, init_deps::initialize_dir, log_deps::{LogType, log}, sync_deps::sync_dirs};
 
 
 #[derive(Parser, Debug)]
@@ -51,7 +52,9 @@ enum Commands {
     )]
     Sync {
         src: PathBuf,
-        dest: PathBuf,
+        dest: Option<PathBuf>,
+        #[arg(short='a', long="include-hidden", help="Includes the hidden files and directories in the input directories")]
+        include_hidden: bool
     },
     #[command(
         version,
@@ -78,8 +81,11 @@ fn main() {
             Commands::Init { path, include_hidden } => {
                 initialize_dir(&path.unwrap_or(PathBuf::from(".")), include_hidden);
             }
-            Commands::Sync { src, dest } => {
-                // Need to implement Syncing procedure
+            Commands::Sync { src, dest, include_hidden } => {
+                let dest_path = dest.unwrap_or(PathBuf::from("."));
+                initialize_dir(&src, include_hidden);
+                initialize_dir(&dest_path, include_hidden);
+                sync_dirs(&src, &dest_path, include_hidden);
             }
             Commands::Backup { src, dest, include_hidden } => {
                 let dest = dest.unwrap_or(PathBuf::from("."));
