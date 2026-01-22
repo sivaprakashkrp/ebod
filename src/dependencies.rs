@@ -17,7 +17,7 @@ pub fn check_with_filename(file: &String, dest_meta: &Vec<FileEntry>) -> i16 {
 }
 
 // Renaming redundant files to prevent overwriting
-pub fn rename_redundant_files(file: &str) -> String {
+fn _rename_redundant_files_at_end(file: &str) -> String {
     let mut new_file_name = String::from("");
 
     if let Some(file_name) = PathBuf::from(file).file_name() {
@@ -35,6 +35,16 @@ pub fn rename_redundant_files(file: &str) -> String {
     }
 
     new_file_name
+}
+
+pub fn rename_redundant_files(file: &str, dir: &str) -> String {
+    if let Some(file_name) = PathBuf::from(file).file_name() {
+        let old_file_name = String::from(file_name.to_str().unwrap_or("default"));
+        return format!("ebod-{}-{}", dir, old_file_name);
+    } else {
+        log(LogType::Err, &format!("Couldn't resolve the file name of {}. Stored as ebod-src-default", file));
+        return String::from("ebod-src-default");
+    }
 }
 
 // Abstraction for the file copying mechanism

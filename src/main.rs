@@ -100,7 +100,7 @@ fn copy_src_into_dest(src: PathBuf, dest: PathBuf, include_hidden: bool) {
     initialize_dir(&src, include_hidden);
     initialize_dir(&dest, include_hidden);
     
-    if let Err(err) = backup(&src, &dest) {
+    if let Err(err) = backup(&src, &dest, "src") {
         log(LogType::Err, &format!("{}", err));
     }
 }

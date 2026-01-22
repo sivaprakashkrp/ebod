@@ -5,7 +5,7 @@ use colored::Colorize;
 use crate::{dependencies::{check_with_filename, copy_file, read_metadata, rename_redundant_files}, log_deps::{LogType, log}, structs::{EntryType, FileEntry}};
 
 // Backup the files in the src directory in to the dest directory
-pub fn backup(src: &PathBuf, dest: &PathBuf) -> Result<(), String> {
+pub fn backup(src: &PathBuf, dest: &PathBuf, dir :&str) -> Result<(), String> {
     let src_path = src.join(PathBuf::from(".ebod/metadata.json"));
     let dest_path = dest.join(PathBuf::from(".ebod/metadata.json"));
 
@@ -29,7 +29,7 @@ pub fn backup(src: &PathBuf, dest: &PathBuf) -> Result<(), String> {
             let idx = check_with_filename(&file.name, &dest_meta);
             if idx != -1 {
                 if dest_meta.get(idx as usize).unwrap().modified_at != file.modified_at {
-                    let redundant_file_name = rename_redundant_files(&file.name);
+                    let redundant_file_name = rename_redundant_files(&file.name, dir);
                     if let Err(_error) = copy_file(&src.join(PathBuf::from(&file.name)), &dest.join(PathBuf::from(&redundant_file_name))) {
                         return Err(format!("Error copying file: {}", &file.name));
                     } else {
@@ -59,10 +59,10 @@ pub fn backup(src: &PathBuf, dest: &PathBuf) -> Result<(), String> {
 
     if copied_files_with_new_name.len() > 0 {
         log(LogType::Info, "Files that were present in both source and destination and hence were copied with new name:");
+        println!("{}", "  -- Please change the names of the below files ASAP -- ".on_red().bold());
         for file in copied_files_with_new_name {
             println!("\t{}", file.yellow());
         }
-        println!("{}", "  -- Please change the names of the above files ASAP -- ".on_red().bold())
     }
 
     Ok(())
