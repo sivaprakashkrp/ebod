@@ -4,6 +4,23 @@ use colored::Colorize;
 
 use crate::{dependencies::{check_with_filename, copy_file, read_metadata, rename_redundant_files}, log_deps::{LogType, log}, structs::{EntryType, FileEntry}};
 
+/// Backs up data present in the src folder into the dest folder.
+/// 
+/// # Inputs:
+/// * `src` -> `&PathBuf` of the source directory
+/// * `dest` -> `&PathBuf` of the destination directory
+/// 
+/// # Output: `Result<(), String>`
+/// 
+/// The function first calls `read_metadata` function on both the src and dest directories. Then the metadata recorded is stored in the `metadata.json` file inside the hidden folder `.ebod`.
+/// 
+/// Then based on the file names and their metadata present in the metadata, the files are copied from src to dest.
+/// 
+/// # Rules followed:
+/// 1. A file in the src is checked for its existence in the dest by checking all of its stored metadata. If the file exists, then it is not copied.
+/// 2. If there is a file in src and dest with the same name, then the `modified_at` attribute of the files are checked. If they are equal then the file is not copied.
+/// 3. If not, then the file from src is copied to dest with the filename "ebod-src-<filename>". The user is prompted to change the file name at the end of the Backup process
+/// 
 // Backup the files in the src directory in to the dest directory
 pub fn backup(src: &PathBuf, dest: &PathBuf, dir :&str) -> Result<(), String> {
     let src_path = src.join(PathBuf::from(".ebod/metadata.json"));

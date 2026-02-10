@@ -6,7 +6,14 @@ use std::{fs, path::PathBuf, time::UNIX_EPOCH};
 
 use crate::{log_deps::{LogType, log}, structs::{EntryType, FileEntry}};
 
-// Check if the filename in src already exists in the dest directory
+/// Checks if the filename in src already exists in the dest directory
+/// 
+/// # Inputs:
+/// * `file` -> `&String` which contains the file name
+/// * `dest_meta` -> A `Vec<FileEntry>` that contains the metatdata of the dest directory
+/// 
+/// # Output: `i16`
+/// The index of the file in the destination metadata as a `i16` 
 pub fn check_with_filename(file: &String, dest_meta: &Vec<FileEntry>) -> i16 {
     for (index, entry) in dest_meta.iter().enumerate() {
         if entry.name == *file {
@@ -16,7 +23,6 @@ pub fn check_with_filename(file: &String, dest_meta: &Vec<FileEntry>) -> i16 {
     -1
 }
 
-// Renaming redundant files to prevent overwriting
 fn _rename_redundant_files_at_end(file: &str) -> String {
     let mut new_file_name = String::from("");
 
@@ -37,6 +43,14 @@ fn _rename_redundant_files_at_end(file: &str) -> String {
     new_file_name
 }
 
+/// Renaming redundant files to prevent overwriting
+/// 
+/// # Inputs:
+/// * `file` -> A string slice with the file name
+/// * `dir` -> A string slice with the directory name (src/dest)
+/// 
+/// # Output: `String` 
+/// A String with the newly created file name to replace the redundant name.
 pub fn rename_redundant_files(file: &str, dir: &str) -> String {
     if let Some(file_name) = PathBuf::from(file).file_name() {
         let old_file_name = String::from(file_name.to_str().unwrap_or("default"));
@@ -47,7 +61,14 @@ pub fn rename_redundant_files(file: &str, dir: &str) -> String {
     }
 }
 
-// Abstraction for the file copying mechanism
+/// Abstraction for the file copying mechanism
+/// 
+/// # Inputs:
+/// * `src` -> `&PathBuf` of the source file
+/// * `dest` -> `&PathBuf` of the destination file
+/// 
+/// # Output: `Result<u64, String>`
+/// A `Result<u64, String>` with an error message in the string in case of errors.
 pub fn copy_file(src: &PathBuf, dest: &PathBuf) -> Result<u64, String> {
     if let Ok(_success) = fs::copy(src, dest) {
         Ok(_success)
@@ -56,7 +77,13 @@ pub fn copy_file(src: &PathBuf, dest: &PathBuf) -> Result<u64, String> {
     }
 }
 
-// Abstraction for the mechanism that parses the directory, its files and records metadata
+/// Abstraction for the mechanism that reads the metadata from `.ebod/metadata.json` and returns it
+/// 
+/// # Input:
+/// * `path` -> `&PathBuf` of the metadata file
+/// 
+/// # Output: `Result<Vec<FileEntry, String>`
+/// A `Result<Vec<FileEntry, String>` that either has the stored metadata or error message
 pub fn read_metadata(path: &PathBuf) -> Result<Vec<FileEntry>, String> {
     if let Ok(file_content) = fs::read_to_string(path) {
         if let Ok(json_content) = serde_json::from_str(&file_content) {
@@ -69,7 +96,13 @@ pub fn read_metadata(path: &PathBuf) -> Result<Vec<FileEntry>, String> {
     }
 } 
 
-// A function to print the structure of the data recursively
+/// A function to traverse the directories and files recursively and store their metadata.
+/// 
+/// # Input:
+/// * `path` -> `&PathBuf` of the directory whose metadata is required
+/// * `og_path` -> Same `&PathBuf` as `path`. Used to prefix the directory name in each file in metadata
+/// * `data` -> `Vec<FileEntry>` which is the buffer in which the data is recorded.
+/// * `include_hidden` -> `bool` flag to represent the inclusion of hidden files
 pub fn recursive_listing(path: &PathBuf, og_path: &PathBuf, data: &mut Vec<FileEntry>, include_hidden: bool) {
     if let Ok(read_dir) = fs::read_dir(&path) {
         for entry in read_dir {
