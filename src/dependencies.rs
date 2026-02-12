@@ -8,9 +8,9 @@ use crate::{log_deps::{LogType, log}, structs::{EntryType, FileEntry}};
 
 /// Checks if the filename in src already exists in the dest directory
 /// 
-/// # Inputs:
-/// * `file` -> `&String` which contains the file name
-/// * `dest_meta` -> A `Vec<FileEntry>` that contains the metatdata of the dest directory
+/// # Inputs
+/// * `file: &String` -> `&String` which contains the file name
+/// * `dest_meta: Vec<FileEntry>` -> A `Vec<FileEntry>` that contains the metatdata of the dest directory
 /// 
 /// # Output: `i16`
 /// The index of the file in the destination metadata as a `i16` 
@@ -45,9 +45,9 @@ fn _rename_redundant_files_at_end(file: &str) -> String {
 
 /// Renaming redundant files to prevent overwriting
 /// 
-/// # Inputs:
-/// * `file` -> A string slice with the file name
-/// * `dir` -> A string slice with the directory name (src/dest)
+/// # Inputs
+/// * `file: &str` -> A string slice with the file name
+/// * `dir: &str` -> A string slice with the directory name (src/dest)
 /// 
 /// # Output: `String` 
 /// A String with the newly created file name to replace the redundant name.
@@ -63,9 +63,9 @@ pub fn rename_redundant_files(file: &str, dir: &str) -> String {
 
 /// Abstraction for the file copying mechanism
 /// 
-/// # Inputs:
-/// * `src` -> `&PathBuf` of the source file
-/// * `dest` -> `&PathBuf` of the destination file
+/// # Inputs
+/// * `src: &PathBuf` -> `&PathBuf` of the source file
+/// * `dest: &PathBuf` -> `&PathBuf` of the destination file
 /// 
 /// # Output: `Result<u64, String>`
 /// A `Result<u64, String>` with an error message in the string in case of errors.
@@ -79,7 +79,7 @@ pub fn copy_file(src: &PathBuf, dest: &PathBuf) -> Result<u64, String> {
 
 /// Abstraction for the mechanism that reads the metadata from `.ebod/metadata.json` and returns it
 /// 
-/// # Input:
+/// # Input
 /// * `path` -> `&PathBuf` of the metadata file
 /// 
 /// # Output: `Result<Vec<FileEntry, String>`
@@ -98,11 +98,11 @@ pub fn read_metadata(path: &PathBuf) -> Result<Vec<FileEntry>, String> {
 
 /// A function to traverse the directories and files recursively and store their metadata.
 /// 
-/// # Input:
-/// * `path` -> `&PathBuf` of the directory whose metadata is required
-/// * `og_path` -> Same `&PathBuf` as `path`. Used to prefix the directory name in each file in metadata
-/// * `data` -> `Vec<FileEntry>` which is the buffer in which the data is recorded.
-/// * `include_hidden` -> `bool` flag to represent the inclusion of hidden files
+/// # Input
+/// * `path: &PathBuf` -> `&PathBuf` of the directory whose metadata is required
+/// * `og_path: &PathBuf` -> Same `&PathBuf` as `path`. Used to prefix the directory name in each file in metadata
+/// * `data: &mut Vec<FileEntry>` -> `Vec<FileEntry>` which is the buffer in which the data is recorded.
+/// * `include_hidden: bool` -> `bool` flag to represent the inclusion of hidden files
 pub fn recursive_listing(path: &PathBuf, og_path: &PathBuf, data: &mut Vec<FileEntry>, include_hidden: bool) {
     if let Ok(read_dir) = fs::read_dir(&path) {
         for entry in read_dir {

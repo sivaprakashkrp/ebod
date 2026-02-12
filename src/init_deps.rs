@@ -2,6 +2,13 @@ use std::{fs, io::Write, path::{Path, PathBuf}};
 
 use crate::{dependencies::recursive_listing, log_deps::{LogType, log}, structs::FileEntry};
 
+/// A function to initalize the directory for `ebod`. This is the function that is called when the `ebod init` command is executed. It creates the `./.ebod/metadata.json` file. Scans the directory for information of files and loads the metadata into `metadata.json`. 
+/// 
+/// The function also hides the `./.ebod` directory.
+/// 
+/// # Input
+/// * `path: &PathBuf` -> The path of the directory in which `ebod` should be initialized
+/// * include_hidden: bool` -> The boolean flag which tells whether to include or exclude hidden files
 // A function to create metadata about the directory in .ebod/metadata.json
 pub fn initialize_dir(path: &PathBuf, include_hidden: bool) {
     let mut data: Vec<FileEntry> = vec![];

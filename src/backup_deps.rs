@@ -6,9 +6,9 @@ use crate::{dependencies::{check_with_filename, copy_file, read_metadata, rename
 
 /// Backs up data present in the src folder into the dest folder.
 /// 
-/// # Inputs:
-/// * `src` -> `&PathBuf` of the source directory
-/// * `dest` -> `&PathBuf` of the destination directory
+/// # Inputs
+/// * `src: &PathBuf` -> `&PathBuf` of the source directory
+/// * `dest: &PathBuf` -> `&PathBuf` of the destination directory
 /// 
 /// # Output: `Result<(), String>`
 /// 

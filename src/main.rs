@@ -95,6 +95,12 @@ fn main() {
     }
 }
 
+/// Abstracted function to copy `src` into `dest`
+/// 
+/// # Input
+/// * `src: &PathBuf` -> The `PathBuf` to the source directory
+/// * `dest: &PathBuf` -> The `PathBuf` to the destination directory
+/// * `include_hidden: bool` -> The boolean flag to represent inclusion of hidden files for backup process.
 fn copy_src_into_dest(src: PathBuf, dest: PathBuf, include_hidden: bool) {
     // Initializing the .ebod directories in both the folders
     initialize_dir(&src, include_hidden);

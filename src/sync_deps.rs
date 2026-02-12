@@ -2,6 +2,15 @@ use std::{fs::remove_file, io::ErrorKind, path::PathBuf};
 
 use crate::{backup_deps::backup, dependencies::recursive_listing, init_deps::initialize_dir, log_deps::{LogType, log}, structs::FileEntry};
 
+/// The function that is called when `ebod sync` command is invoked. It syncs the files in the source and the destination directory. It works by first backing up the `src` into `dest`. Then `dest` is initialized again and then this `dist` is backed up into the `src` directory.
+/// Then the copies in the `src` directory are cleared to avoid duplication.
+/// 
+/// The deletion of duplicates in `src` happens by selecting files that start with `ebod-src-` as these file names are generated during the back up process to prevent overwriting of already existing files.
+/// 
+/// # Input
+/// * `src: &PathBuf` -> The `PathBuf` to the source directory
+/// * `dest: &PathBuf` -> The `PathBuf` to the destination directory
+/// * `include_hidden: bool` -> The boolean flag to represent inclusion of hidden files for synchronization process.
 pub fn sync_dirs(src: &PathBuf, dest: &PathBuf, include_hidden: bool) {
     if let Ok(_suc) = backup(&src, &dest, "src") {
         log(LogType::Ok, &format!("{} was backed up into {}", src.to_string_lossy(), dest.to_string_lossy()));
