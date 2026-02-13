@@ -11,6 +11,15 @@ While taking local backups, we either have to over-write a folder that we have a
 
 ## Installation
 
+### Using `cargo`
+
+You can now install [`ebod`](https://crates.io/crates/ebod) through [`cargo`](https://crates.io/) with the command:
+```bash
+cargo install ebod
+```
+
+### Building from source
+
 You can build `ebod` from source by cloning this directory, `cd` into the repository and running 
 ```bash
 cargo build --release
