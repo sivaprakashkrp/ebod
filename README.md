@@ -1,4 +1,7 @@
 # `ebod`
+
+[![Crates.io](https://img.shields.io/crates/v/ebod.svg)](https://crates.io/crates/ebod)
+
 Easy/Efficient Backup Of Data
 
 A command-line utility that makes the process of manual backups easy and efficient.
@@ -17,6 +20,10 @@ You can now install [`ebod`](https://crates.io/crates/ebod) through [`cargo`](ht
 ```bash
 cargo install ebod
 ```
+
+### For Windows Systems
+
+If you are on a Windows (`x86_64`) system, then you can refer to the build binary in **Releases** section. Download it and add the path of the parent folder to `PATH` variable.
 
 ### Building from source
 
@@ -93,5 +100,9 @@ ebod sync <SRC> [DEST] [OPTIONS]
 -a, --include-hidden
 ```
 Tell `ebod` to include hidden files while traversing the directory.
+
+---
+
+For more information and documentation, visit [docs.rs](https://docs.rs/crate/ebod/1.0.0/source/)
 
     
