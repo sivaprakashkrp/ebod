@@ -9,7 +9,7 @@ license = "GPL-2.0-or-later"
 homepage = "https://github.com/sivaprakashkrp/ebod"
 description = "An Easy/Efficient Backup Solution for manual backup of syncing data in local storage devices"
 keywords = ["backup", "local", "copy", "sync", "files"]
-categories = ["command-line-utilities"]
+categories = ["command-line-utilities", "filesystem"]
 
 [dependencies]
 clap = {version = "4.5.54", features=["derive"]}
