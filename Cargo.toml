@@ -1,6 +1,6 @@
 [package]
 name = "ebod"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2024"
 authors = ["Sivaprakash P"]
 repository = "https://github.com/sivaprakashkrp/ebod"
