@@ -4,6 +4,8 @@
 
 Easy/Efficient Backup Of Data
 
+![`ebod` Banner](./images/ebod-banner.png)
+
 A command-line utility that makes the process of manual backups easy and efficient.
 
 While taking local backups, we either have to over-write a folder that we have already backed up and would like to add some more file to. This has to be done as there might be already existing files, files with same names in both source and destination directories but having different content, i.e., different modified times. 
