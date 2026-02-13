@@ -1,8 +1,15 @@
 [package]
 name = "ebod"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2024"
 authors = ["Sivaprakash P"]
+repository = "https://github.com/sivaprakashkrp/ebod"
+readme = "README.md"
+license = "GPL2.0"
+homepage = "https://github.com/sivaprakashkrp/ebod"
+description = "An Easy/Efficient Backup Solution for manual backup of syncing data in local storage devices"
+keywords = ["backup", "local", "copy", "sync", "files", "directories"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 clap = {version = "4.5.54", features=["derive"]}
@@ -10,3 +17,10 @@ colored = "3.0.0"
 hf = "0.5.1"
 serde = {version = "1.0.228", features = ["derive"]}
 serde_json = "1.0.149"
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+panic = "abort"
+opt-level = "z"
