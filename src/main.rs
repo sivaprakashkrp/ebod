@@ -1,15 +1,8 @@
 use std::path::PathBuf;
 use clap::{Parser, Subcommand};
 
-// Importing from our dependencies
-mod dependencies;
-mod init_deps;
-mod backup_deps;
-mod structs;
-mod log_deps;
-mod sync_deps;
-
-use crate::{backup_deps::backup, init_deps::initialize_dir, log_deps::{LogType, log}, sync_deps::sync_dirs};
+// Importing from lib.rs
+use ebod::{LogType, backup, check_dir_existence, initialize_dir, log, sync_dirs};
 
 
 #[derive(Parser, Debug)]
@@ -79,18 +72,21 @@ fn main() {
     if let Some(command) = cli.command {
         match command {
             Commands::Init { path, include_hidden } => {
+                check_dir_existence(&path.clone().unwrap_or(PathBuf::from(".")));
                 initialize_dir(&path.unwrap_or(PathBuf::from(".")), include_hidden);
-            }
+            },
             Commands::Sync { src, dest, include_hidden } => {
+                check_dir_existence(&src);
                 let dest_path = dest.unwrap_or(PathBuf::from("."));
                 initialize_dir(&src, include_hidden);
                 initialize_dir(&dest_path, include_hidden);
                 sync_dirs(&src, &dest_path, include_hidden);
-            }
+            },
             Commands::Backup { src, dest, include_hidden } => {
+                check_dir_existence(&src);
                 let dest = dest.unwrap_or(PathBuf::from("."));
                 copy_src_into_dest(src, dest, include_hidden);
-            }
+            },
         }
     }
 }
