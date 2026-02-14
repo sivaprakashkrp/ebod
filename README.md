@@ -41,6 +41,17 @@ The `init` subcommand is used to initialise a directory so that `ebod` can effie
 
 The `init` subcommand works by recursively traversing the directory structure of the input path and 
 
+## Use `ebod` in your project
+`ebod` is not only a binary. It is also a library. You can use `ebod` as a library from the release `v1.1.0`. You can add `ebod` to your `cargo` project with the command:
+```bash
+cargo add ebod@=1.1.0
+```
+
+or by adding the following line to your `Cargo.toml`:
+```toml
+ebod = "=1.1.0"
+```
+
 ### Arguments
 
 ```bash
@@ -105,6 +116,7 @@ Tell `ebod` to include hidden files while traversing the directory.
 
 ---
 
-For more information and documentation, visit [docs.rs](https://docs.rs/crate/ebod/1.0.0/source/)
+For more information about the package, visit [docs.rs - source](https://docs.rs/crate/ebod/1.0.0/source/)
+For more documentation to use the package, visit [docs.rs - docs](https://docs.rs/ebod/1.1.0/ebod/)
 
     
