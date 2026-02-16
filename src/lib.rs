@@ -110,10 +110,12 @@ pub fn initialize_dir(path: &PathBuf, include_hidden: bool) {
         if let Ok(mut file) = fs::File::create(&file_path) {
             if let Ok(_success) = file.write_all(data_string.as_bytes()) {
                 log(LogType::Ok, &format!("Configuration files created at {}", file_path.to_str().unwrap_or("default")));
-                if let Ok(_success) = hf::hide(PathBuf::from(&config_path)) {
-                    log(LogType::Info, &format!("{} directory has been hidden", &config_path.to_str().unwrap_or("Path Couldn't be Unwraped")));
-                } else {
-                    log(LogType::Err, "Error in hiding the .ebod directory");
+                if !hf::is_hidden(file_path).unwrap_or(false) {
+                    if let Ok(_success) = hf::hide(PathBuf::from(&config_path)) {
+                        log(LogType::Info, &format!("{} directory has been hidden", &config_path.to_str().unwrap_or("Path Couldn't be Unwraped")));
+                    } else {
+                        log(LogType::Err, "Error in hiding the .ebod directory");
+                    }
                 }
             } else {
                 log(LogType::Err, "Error occurred during writing data to the metadata.json");
