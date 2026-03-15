@@ -73,7 +73,7 @@ pub fn log(logtype: LogType, msg: &str) {
 
 /// A function to initalize the directory for `ebod`. This is the function that is called when the `ebod init` command is executed. It creates the `./.ebod/metadata.json` file. Scans the directory for information of files and loads the metadata into `metadata.json`. 
 /// 
-/// The function also hides the `./.ebod` directory.
+/// The function also hides the `./.ebod` directory in **Windows** only as files and directories starting with `.` are automatically hidden in **Linux** systems.
 /// 
 /// # Input
 /// * `path: &PathBuf` -> The path of the directory in which `ebod` should be initialized
@@ -110,11 +110,14 @@ pub fn initialize_dir(path: &PathBuf, include_hidden: bool) {
         if let Ok(mut file) = fs::File::create(&file_path) {
             if let Ok(_success) = file.write_all(data_string.as_bytes()) {
                 log(LogType::Ok, &format!("Configuration files created at {}", file_path.to_str().unwrap_or("default")));
-                if !hf::is_hidden(file_path).unwrap_or(false) {
-                    if let Ok(_success) = hf::hide(PathBuf::from(&config_path)) {
-                        log(LogType::Info, &format!("{} directory has been hidden", &config_path.to_str().unwrap_or("Path Couldn't be Unwraped")));
-                    } else {
-                        log(LogType::Err, "Error in hiding the .ebod directory");
+                #[cfg(target_os = "windows")]
+                {
+                    if !(hf::is_hidden(file_path).unwrap_or(false)) {
+                        if let Ok(_success) = hf::hide(PathBuf::from(&config_path)) {
+                            log(LogType::Info, &format!("{} directory has been hidden", &config_path.to_str().unwrap_or("Path Couldn't be Unwraped")));
+                        } else {
+                            log(LogType::Err, "Error in hiding the .ebod directory");
+                        }
                     }
                 }
             } else {

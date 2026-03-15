@@ -20,7 +20,7 @@ While taking local backups, we either have to over-write a folder that we have a
 
 You can now install [`ebod`](https://crates.io/crates/ebod) through [`cargo`](https://crates.io/) with the command:
 ```bash
-cargo install ebod@1.1.0
+cargo install ebod
 ```
 
 ### Building from source
@@ -36,14 +36,14 @@ Then you just have to add the path of the application, usually in `<path-to-repo
 If you are on a Windows (`x86_64`) system, then you can refer to the build binary in **Releases** section. Download it and add the path of the parent folder to `PATH` variable.
 
 ## Use `ebod` in your project
-`ebod` is not only a binary. It is also a library. You can use `ebod` as a library from the release `v1.1.0`. You can add `ebod` to your `cargo` project with the command:
+`ebod` is not only a binary. It is also a library. You can use `ebod` as a library from the release `v1.1.1`. You can add `ebod` to your `cargo` project with the command:
 ```bash
-cargo add ebod@=1.1.0
+cargo add ebod
 ```
 
 or by adding the following line to your `Cargo.toml`:
 ```toml
-ebod = "=1.1.0"
+ebod = "1.1.1"
 ```
 
 ## The `init` subcommand
@@ -116,8 +116,8 @@ Tell `ebod` to include hidden files while traversing the directory.
 
 ---
 
-For more information about the package, visit [docs.rs - source](https://docs.rs/crate/ebod/1.0.0/source/)
+For source code of `ebod` from [crates.io](https://crates.io/crates/ebod), visit [docs.rs - source](https://docs.rs/crate/ebod/latest)
 
-For more documentation to use the package, visit [docs.rs - docs](https://docs.rs/ebod/1.1.0/ebod/)
+For more documentation to use the package, visit [docs.rs - docs](https://docs.rs/ebod/latest/ebod/)
 
     
