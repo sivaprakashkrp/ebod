@@ -97,6 +97,8 @@ The `sync` subcommand is used to sync the directories in the input paths by copy
 
 The `sync` command works by calling the `init` command first on both the `src` and `dest` directories, then backing up `src` into `dest`. Then `dest` is re-initialized, and the files in `dest` are backed up into `src`.
 
+**NOTE:** There is a small issue that has been discovered. `sync` command is not working the same in **Windows** and **Linux** Systems. This leads to two copies of the same file to result in a single folder while syncing them. The duplicated files will start with `ebod-<src|dest>` and hence can be deleted easily. Please use `sync` command with care. This issue is being investigated and will be resolved soon.
+
 ### Arguments
 
 ```bash
